@@ -43,22 +43,28 @@ import axios from 'axios';
 
 export default function App() {
 	const [movies, setMovies] = useState([]);
+
 	useEffect(() => {
 		axios
 			.get(
-				`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`,
+				// `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`,
+				`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=US&region=US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`,
 			)
 			.then(function (response) {
 				return setMovies([...response.data.results]);
+			})
+			.catch(function (error) {
+				console.log(error);
 			});
 	}, []);
 
 	return (
 		<>
-			<h1>Hola World!</h1>
+			<h1>Movie App</h1>
+			<h3>Discover Movies</h3>
 			<ol>
-				{movies.map((obj, index) => (
-					<li key={index}>{obj.original_title}</li>
+				{movies.map((movie, index) => (
+					<li key={index}>{movie.original_title}</li>
 				))}
 			</ol>
 		</>
